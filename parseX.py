@@ -49,17 +49,3 @@ class fetch_data:
         INFO = p.run_search()
         bulk_recorder.record_info(INFO)
         return bulk_recorder.__out__()
-
-
-# while __name__ == '__main__':
-#     print "hey ",
-#     print "###################WELCOME###################"
-#     CITY = raw_input("Enter a city below: ")
-#     bulk_info = __Bulk__()
-#     for i in xrange(76):
-#         URL = "https://canadalawyerlist.com/city/{0}.html?page={1}".format(CITY,i)
-#         p = __Parse__(URL); 		#Next step is to parse all of the pages
-#         INFO = p.test_search()
-#         bulk_info.record_info(INFO)
-#     bulk_info.__out__()
-#     break
