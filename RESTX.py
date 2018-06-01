@@ -6,7 +6,7 @@ app = Flask(__name__)
 api = Api(app)
 
 a = fetch_data()
-OUT = a.GET('Toronto', 3)
+OUT = a.GET('Toronto')
 
 class out_info(Resource):
     def get(self):

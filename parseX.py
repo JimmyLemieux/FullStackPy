@@ -1,17 +1,18 @@
 from bs4 import BeautifulSoup
 import urllib as htttpParse
+import requests
 import re
 from collections import defaultdict
 import logging
+import sys
 
 class __Parse__:
     def __init__(self,PARSE_URL_BASE):
         try:
-             self.resp = htttpParse.urlopen(PARSE_URL_BASE)   #Should be surronded with try and catch
-             self.SOUP = BeautifulSoup(self.resp,'html.parser') #encode to string
+            self.resp = requests.get(PARSE_URL_BASE,stream=True)   #Should be surronded with try and catch
+            self.SOUP = BeautifulSoup(self.resp.text,'html.parser') #encode to string
         except:
             print "Error in the URL/Connection port Failed"
-            console.log("Exiting...")
             exit()
 
     def run_search(self):
@@ -41,11 +42,17 @@ class __Bulk__:
         return self.RESP_DICT
 
 class fetch_data:
-    def GET(self,CITY,PAGE):
+
+    def GET_PROGRESS(self,CURRENT_PAGE):
+        sys.stdout.write(CURRENT_PAGE/75);
+        sys.stdout.flush()
+
+    def GET(self,CITY):
         print 'fetching in progress'
         bulk_recorder = __Bulk__()
-        URL = "https://canadalawyerlist.com/city/{0}.html?page={1}".format(CITY,PAGE)
-        p = __Parse__(URL) # Start to setup and gathering html information
-        INFO = p.run_search()
-        bulk_recorder.record_info(INFO)
+        for PAGE in xrange(75):
+            URL = "https://canadalawyerlist.com/city/{0}.html?page={1}".format(CITY,PAGE)
+            p = __Parse__(URL) # Start to setup and gathering html information
+            INFO = p.run_search()
+            bulk_recorder.record_info(INFO)
         return bulk_recorder.__out__()
